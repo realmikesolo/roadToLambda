@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev:inst": "ts-node tasks/instagram-giveaway/src/index.ts",
+    "dev:vac":"ts-node tasks/vacation/src/index.ts",
     "build": "tsc -p .",
     "test": "mocha -r ts-node/register 'tasks/**/*.test.ts'",
     "lint": "eslint . --ext .ts --fix"
