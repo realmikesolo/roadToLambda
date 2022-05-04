@@ -9,7 +9,7 @@
 ## Run
 * Instagram-giveaway \
  `npm run dev:inst`
-* Vacation \ 
+* Vacation \
  `npm run dev:vac`
 * In progress...
 * In progress...
