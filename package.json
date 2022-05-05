@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "dev:inst": "ts-node tasks/instagram-giveaway/src/index.ts",
-    "dev:vac":"ts-node tasks/vacation/src/index.ts",
+    "dev:vac": "ts-node tasks/vacation/src/index.ts",
+    "dev:sort": "ts-node tasks/json-sort/src/index.ts",
     "build": "tsc -p .",
     "test": "mocha -r ts-node/register 'tasks/**/*.test.ts'",
     "lint": "eslint . --ext .ts --fix"
@@ -13,11 +14,15 @@
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "@types/node": "^16.11.24",
+    "@types/node-fetch": "^2.6.1",
     "chai": "^4.3.6",
     "eslint": "^8.14.0",
     "mocha": "^9.2.2",
     "prettier": "^2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
   }
 }
