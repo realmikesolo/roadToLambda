@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { transformData } from '.';
+import { transformData } from './transform-data';
 
 describe('vacation', () => {
   it('transformData', () => {
