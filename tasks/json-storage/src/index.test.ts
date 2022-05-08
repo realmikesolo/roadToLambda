@@ -8,12 +8,12 @@ import { randomUUID } from 'node:crypto';
 describe('json-storage', () => {
   const testBody = { name: 'Elon Musk' };
 
-  before(() => startServer());
+  before(() => startServer(1991));
 
   describe('POST /', () => {
     it('given valid data, then 201', async () => {
       const route = randomUUID();
-      const data = await fetch(`http://localhost/${route}`, {
+      const data = await fetch(`http://localhost:1991/${route}`, {
         method: 'post',
         body: JSON.stringify(testBody),
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +27,7 @@ describe('json-storage', () => {
     });
 
     it('given too short route, then 400', async () => {
-      const data = await fetch('http://localhost/t', {
+      const data = await fetch('http://localhost:1991/t', {
         method: 'post',
         body: JSON.stringify(testBody),
         headers: { 'Content-Type': 'application/json' },
@@ -37,7 +37,7 @@ describe('json-storage', () => {
     });
 
     it('given too long route, then 400', async () => {
-      const data = await fetch(`http://localhost/${'t'.repeat(65)}`, {
+      const data = await fetch(`http://localhost:1991/${'t'.repeat(65)}`, {
         method: 'post',
         body: JSON.stringify(testBody),
         headers: { 'Content-Type': 'application/json' },
@@ -47,7 +47,7 @@ describe('json-storage', () => {
     });
 
     it('given invalid symbols in route, then 400', async () => {
-      const data = await fetch('http://localhost/a$$hole', {
+      const data = await fetch('http://localhost:1991/a$$hole', {
         method: 'post',
         body: JSON.stringify(testBody),
         headers: { 'Content-Type': 'application/json' },
@@ -62,7 +62,7 @@ describe('json-storage', () => {
       const route = randomUUID();
       await writeFile(getFilePath(route), JSON.stringify(testBody));
 
-      const data = await fetch(`http://localhost/${route}`);
+      const data = await fetch(`http://localhost:1991/${route}`);
       const body = await data.json();
 
       expect(data.status).eql(200);
@@ -72,7 +72,7 @@ describe('json-storage', () => {
     });
 
     it('given nonexistent route, then 404', async () => {
-      const data = await fetch('http://localhost/test1');
+      const data = await fetch('http://localhost:1991/test1');
 
       expect(data.status).eql(404);
     });
