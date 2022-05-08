@@ -7,7 +7,7 @@
     "dev:sort": "ts-node tasks/json-sort/src/index.ts",
     "dev:storage": "ts-node tasks/json-storage/src/index.ts",
     "build": "tsc -p .",
-    "test": "mocha -r ts-node/register 'tasks/**/*.test.ts'",
+    "test": "mocha -r ts-node/register 'tasks/**/*.test.ts' --exit",
     "lint": "eslint . --ext .ts --fix"
   },
   "devDependencies": {
