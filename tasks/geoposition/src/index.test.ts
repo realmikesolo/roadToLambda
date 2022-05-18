@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import { startServer } from './server';
 import fetch from 'node-fetch';
 
-describe.only('geoposition', () => {
-  before(() => startServer());
+describe('geoposition', () => {
+  before(() => startServer(3000));
 
   const data = [
     {
@@ -75,7 +75,9 @@ describe.only('geoposition', () => {
 
   for (const { input, output } of data) {
     it(`GIVEN ip: ${input.ip}, RESULT country: ${output.country}`, async () => {
-      const result = await fetch(`http://localhost/`, { headers: { 'x-forwarded-for': input.ip } });
+      const result = await fetch(`http://localhost:3000/`, {
+        headers: { 'x-forwarded-for': input.ip },
+      });
       const body = await result.json();
       expect(body).eql(output);
     });
