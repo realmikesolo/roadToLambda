@@ -17,5 +17,6 @@
  `npm run dev:storage`
 * Correctarium \
  `npm run dev:corr`
-* In progress...
+* Geoposition \
+ `npm run dev:geo`
 * In progress...
