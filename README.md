@@ -19,4 +19,5 @@
  `npm run dev:corr`
 * Geoposition \
  `npm run dev:geo`
-* In progress...
+* Authorization \
+ `npm run dev:auth`
