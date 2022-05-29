@@ -1,0 +1,42 @@
+name: Test aws-tasks
+
+on:
+  push:
+    branches: [main]
+    paths: 
+      - 'aws-tasks/**'
+  pull_request:
+    branches: [main]
+    paths: 
+      - 'aws-tasks/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache-dependency-path: 'aws-tasks/package-lock.json'
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          cd aws-tasks
+          npm ci
+
+      - name: Build
+        run: |
+          cd aws-tasks
+          npm run build
+
+      - name: Test
+        run: |
+          cd aws-tasks
+          npm run test
