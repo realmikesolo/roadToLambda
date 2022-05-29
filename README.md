@@ -1,12 +1,10 @@
 # roadToLambda
 
-## Setup
-`npm ci`
+Use `npm run test` for unit testing.
 
-## Test
-`npm run test`
+## Base tasks
 
-## Run
+## Main tasks
 * Instagram-giveaway \
  `npm run dev:inst`
 * Vacation \
@@ -21,3 +19,5 @@
  `npm run dev:geo`
 * Authorization \
  `npm run dev:auth`
+
+## AWS tasks
