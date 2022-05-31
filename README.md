@@ -3,8 +3,14 @@
 Use `npm run test` for unit testing.
 
 ## Base tasks
+`cd ./base-tasks`
+
+* Interactive-sort \
+ `npm run dev:sort`
 
 ## Main tasks
+`cd ./main-tasks`
+
 * Instagram-giveaway \
  `npm run dev:inst`
 * Vacation \
@@ -21,3 +27,4 @@ Use `npm run test` for unit testing.
  `npm run dev:auth`
 
 ## AWS tasks
+`cd ./aws-tasks`
