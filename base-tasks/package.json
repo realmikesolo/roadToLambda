@@ -4,7 +4,8 @@
   "scripts": {
     "build": "tsc -p .",
     "test": "mocha -r ts-node/register 'tasks/**/*.test.ts'",
-    "lint": "eslint . --ext .ts --fix"
+    "lint": "eslint . --ext .ts --fix",
+    "dev:sort": "ts-node tasks/interactive-sort/src/index.ts"
   },
   "devDependencies": {
     "@hibanka/eslint-config": "^3.1.0",
