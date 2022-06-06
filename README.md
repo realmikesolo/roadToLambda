@@ -7,6 +7,8 @@ Use `npm run test` for unit testing.
 
 * Interactive-sort \
  `npm run dev:sort`
+ * Primitive-DB \
+ `npm run dev:db`
 
 ## Main tasks
 `cd ./main-tasks`
