@@ -5,11 +5,13 @@
     "build": "tsc -p .",
     "test": "mocha -r ts-node/register 'tasks/**/*.test.ts'",
     "lint": "eslint . --ext .ts --fix",
-    "dev:sort": "ts-node tasks/interactive-sort/src/index.ts"
+    "dev:sort": "ts-node tasks/interactive-sort/src/index.ts",
+    "dev:db": "ts-node tasks/primitive-DB/src/index.ts"
   },
   "devDependencies": {
     "@hibanka/eslint-config": "^3.1.0",
     "@types/chai": "^4.3.0",
+    "@types/inquirer": "^8.2.1",
     "@types/mocha": "^9.1.0",
     "@types/node": "^16.11.24",
     "chai": "^4.3.6",
@@ -18,5 +20,8 @@
     "prettier": "^2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
   }
 }
