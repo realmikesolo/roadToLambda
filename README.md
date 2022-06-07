@@ -9,6 +9,12 @@ Use `npm run test` for unit testing.
  `npm run dev:sort`
  * Primitive-DB \
  `npm run dev:db`
+ * Telegram-Console-Sender \
+ `npm run dev:tg-console -- --version`\
+ `npm run dev:tg-console -- --help`\
+ `npm run dev:tg-console message`\
+ `npm run dev:tg-console photo`
+ 
 
 ## Main tasks
 `cd ./main-tasks`

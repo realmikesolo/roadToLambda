@@ -6,7 +6,8 @@
     "test": "mocha -r ts-node/register 'tasks/**/*.test.ts'",
     "lint": "eslint . --ext .ts --fix",
     "dev:sort": "ts-node tasks/interactive-sort/src/index.ts",
-    "dev:db": "ts-node tasks/primitive-DB/src/index.ts"
+    "dev:db": "ts-node tasks/primitive-DB/src/index.ts",
+    "dev:tg-console": "ts-node tasks/tg-console/src/index.ts"
   },
   "devDependencies": {
     "@hibanka/eslint-config": "^3.1.0",
@@ -14,6 +15,7 @@
     "@types/inquirer": "^8.2.1",
     "@types/mocha": "^9.1.0",
     "@types/node": "^16.11.24",
+    "@types/node-telegram-bot-api": "^0.57.1",
     "chai": "^4.3.6",
     "eslint": "^8.14.0",
     "mocha": "^9.2.2",
@@ -22,6 +24,9 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "inquirer": "^8.2.4"
+    "commander": "^9.3.0",
+    "dotenv": "^16.0.1",
+    "inquirer": "^8.2.4",
+    "node-telegram-bot-api": "^0.57.0"
   }
 }
