@@ -36,7 +36,7 @@ jobs:
           cd base-tasks
           npm run build
 
-      - name: Test
-        run: |
-          cd base-tasks
-          npm run test
+      # - name: Test
+      #   run: |
+      #     cd base-tasks
+      #     npm run test
