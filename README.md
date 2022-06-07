@@ -14,6 +14,8 @@ Use `npm run test` for unit testing.
  `npm run dev:tg-console -- --help`\
  `npm run dev:tg-console message`\
  `npm run dev:tg-console photo`
+ * Telegram-Echo \
+ `npm run dev:echo`
  
 
 ## Main tasks
