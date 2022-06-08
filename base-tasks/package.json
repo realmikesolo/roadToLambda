@@ -8,7 +8,9 @@
     "dev:sort": "ts-node tasks/interactive-sort/src/index.ts",
     "dev:db": "ts-node tasks/primitive-DB/src/index.ts",
     "dev:tg-console": "ts-node tasks/tg-console/src/index.ts",
-    "dev:echo": "ts-node tasks/telegram-echo/src/index.ts"
+    "dev:echo": "ts-node tasks/telegram-echo/src/index.ts",
+    "dev:google": "ts-node tasks/google-uploader/src/index.ts"
+
   },
   "devDependencies": {
     "@hibanka/eslint-config": "^3.1.0",
@@ -28,6 +30,7 @@
     "axios": "^0.27.2",
     "commander": "^9.3.0",
     "dotenv": "^16.0.1",
+    "googleapis": "^101.0.0",
     "inquirer": "^8.2.4",
     "node-telegram-bot-api": "^0.57.0"
   }
