@@ -10,7 +10,7 @@
     "dev:tg-console": "ts-node tasks/tg-console/src/index.ts",
     "dev:echo": "ts-node tasks/telegram-echo/src/index.ts",
     "dev:google": "ts-node tasks/google-uploader/src/index.ts",
-    "dev:weather": "ts-node tasks/tg-weather/src/index.ts"
+    "dev:bot": "ts-node tasks/tg-bot/src/index.ts"
   },
   "devDependencies": {
     "@hibanka/eslint-config": "^3.1.0",
