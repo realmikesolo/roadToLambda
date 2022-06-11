@@ -18,6 +18,8 @@ Use `npm run test` for unit testing.
  `npm run dev:echo`
  * Google-Uploader \
  `npm run dev:google`
+ * TelegramBot-weather \
+ `npm run dev:weather`
  
 
 ## Main tasks
