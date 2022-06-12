@@ -4,12 +4,18 @@ const monoCache: { date: number; data: ExchangeRateMono[] } = { date: 0, data: [
 
 async function getRatesMonobank(): Promise<ExchangeRateMono[]> {
   if (Date.now() > monoCache.date + 60_000) {
-    const rates: ExchangeRateMono[] = await axios
-      .get('https://api.monobank.ua/bank/currency')
-      .then((res) => res.data);
+    try {
+      const rates: ExchangeRateMono[] = await axios
+        .get('https://api.monobank.ua/bank/currency')
+        .then((res) => res.data);
 
-    monoCache.date = Date.now();
-    monoCache.data = rates;
+      monoCache.date = Date.now();
+      monoCache.data = rates;
+    } catch (e) {
+      if (e.code !== 'ERR_BAD_REQUEST') {
+        console.error(e);
+      }
+    }
   }
 
   return monoCache.data;
