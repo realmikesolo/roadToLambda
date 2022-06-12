@@ -1,44 +1,10 @@
 # roadToLambda
 
-Use `npm run test` for unit testing.
+Each task is an isolated project with own dependencies & settings.
+**Steps for run task**:
 
-## Base tasks
-`cd ./base-tasks`
-
-* Interactive-sort \
- `npm run dev:sort`
- * Primitive-DB \
- `npm run dev:db`
- * Telegram-Console-Sender \
- `npm run dev:tg-console -- --version`\
- `npm run dev:tg-console -- --help`\
- `npm run dev:tg-console message`\
- `npm run dev:tg-console photo`
- * Telegram-Echo \
- `npm run dev:echo`
- * Google-Uploader \
- `npm run dev:google`
- * TelegramBot \
- `npm run dev:bot`
- 
-
-## Main tasks
-`cd ./main-tasks`
-
-* Instagram-giveaway \
- `npm run dev:inst`
-* Vacation \
- `npm run dev:vac`
-* Json-sort \
- `npm run dev:sort`
-* Json-storage \
- `npm run dev:storage`
-* Correctarium \
- `npm run dev:corr`
-* Geoposition \
- `npm run dev:geo`
-* Authorization \
- `npm run dev:auth`
-
-## AWS tasks
-`cd ./aws-tasks`
+1. Go to task folder: `cd tasks/{TASK_ID}`
+2. Install dependencies: `npm ci`
+3. If `.env.example` exists, create `.env` file & fill with settings. You can ask me for credentials.
+4. Build TS: `npm run build`
+5. Start: `npm run start`

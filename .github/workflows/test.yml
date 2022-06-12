@@ -1,0 +1,135 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  base-tasks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: tasks/base-google-uploader
+        run: |
+          cd tasks/base-google-uploader
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/base-interactive-sort
+        run: |
+          cd tasks/base-interactive-sort
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/base-primitive-db
+        run: |
+          cd tasks/base-primitive-db
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/base-telegram-bot
+        run: |
+          cd tasks/base-telegram-bot
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/base-telegram-console
+        run: |
+          cd tasks/base-telegram-console
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/base-telegram-echo
+        run: |
+          cd tasks/base-telegram-echo
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+  main-tasks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Setup MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: latest
+
+      - name: tasks/main-authorization
+        run: |
+          cd tasks/main-authorization
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+        env:
+          MONGODB_URL: mongodb://localhost:27017
+          JWT_TOKEN_KEY: "Slava Ukraine"
+          JWT_REFRESH_TOKEN_KEY: "Heroyam Slava"
+
+      - name: tasks/main-correctarium
+        run: |
+          cd tasks/main-correctarium
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/main-geoposition
+        run: |
+          cd tasks/main-geoposition
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/main-instagram-giveaway
+        run: |
+          cd tasks/main-instagram-giveaway
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/main-json-sort
+        run: |
+          cd tasks/main-json-sort
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/main-json-storage
+        run: |
+          cd tasks/main-json-storage
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
+      - name: tasks/main-vacation
+        run: |
+          cd tasks/main-vacation
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
