@@ -133,3 +133,23 @@ jobs:
           npm ci
           npm run build -- --noEmit
           npm run test --if-present
+          
+  aws-tasks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: tasks/aws-cryptocurrency
+        run: |
+          cd tasks/aws-cryptocurrency
+          npm ci
+          npm run build -- --noEmit
+          npm run test --if-present
+
