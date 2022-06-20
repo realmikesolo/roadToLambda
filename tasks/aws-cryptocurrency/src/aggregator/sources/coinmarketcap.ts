@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Env } from '../../Env';
 import { Source } from './source';
 
 export class CoinmarketcapSource extends Source {
@@ -7,7 +8,7 @@ export class CoinmarketcapSource extends Source {
     const coinArray = await axios
       .get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
         headers: {
-          'X-CMC_PRO_API_KEY': process.env.COIN_MARKET_CAP_API!,
+          'X-CMC_PRO_API_KEY': Env.COINMARKETCAP_API,
           Accept: 'application/json',
         },
       })
