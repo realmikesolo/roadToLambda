@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { MoreThan } from 'typeorm';
-import { Env } from '../../Env';
+import { Env } from '../../env';
 import { db } from '../db';
 import { SnapshotModel } from '../models/snapshot';
 
