@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Env } from '../Env';
+import { Env } from '../env';
 import { SnapshotModel } from './models/snapshot';
 
 export let db: DataSource;

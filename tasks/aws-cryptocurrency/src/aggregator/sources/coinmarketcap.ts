@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Env } from '../../Env';
+import { Env } from '../../env';
 import { Source } from './source';
 
 export class CoinmarketcapSource extends Source {

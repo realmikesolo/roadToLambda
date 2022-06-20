@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Env } from '../Env';
+import { Env } from '../env';
 
 export class TelegramBot {
   public async getData() {
