@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'snapshots' })
 export class SnapshotModel {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -9,19 +9,19 @@ export class SnapshotModel {
   public cryptocurrencyName: string;
 
   @Column({ type: 'float', nullable: true })
-  public coinbaseValue: number | undefined;
+  public coinbaseValue?: number;
 
   @Column({ type: 'float', nullable: true })
-  public coinmarketcapValue: number | undefined;
+  public coinmarketcapValue?: number;
 
   @Column({ type: 'float', nullable: true })
-  public coinstatsValue: number | undefined;
+  public coinstatsValue?: number;
 
   @Column({ type: 'float', nullable: true })
-  public coinpaprikaValue: number | undefined;
+  public coinpaprikaValue?: number;
 
   @Column({ type: 'float', nullable: true })
-  public kucoinValue: number | undefined;
+  public kucoinValue?: number;
 
   @CreateDateColumn()
   public createdAt: Date;

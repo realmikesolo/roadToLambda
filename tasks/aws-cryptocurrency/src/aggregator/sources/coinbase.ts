@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Env } from '../../Env';
 import { Source } from './source';
 
 export class CoinbaseSource extends Source {
@@ -11,7 +12,7 @@ export class CoinbaseSource extends Source {
       const data = await axios
         .get(`https://api.coinbase.com/v2/prices/${coin}-USD/buy`, {
           headers: {
-            'CB-ACCESS-KEY': process.env.COIN_BASE_API!,
+            'CB-ACCESS-KEY': Env.COINBASE_API,
           },
         })
         .then((res) => res.data.data)

@@ -1,11 +1,15 @@
 import 'dotenv/config';
-import { startServer } from './server';
-import { connectDB } from './db';
-import { SnapshotService } from './services/snapshot';
+import { startServer } from './aggregator/server';
+import cron from 'node-cron';
+import { connectDB } from './aggregator/db';
+import { SnapshotService } from './aggregator/services/snapshot';
+import { TelegramBot } from './telegram-bot/telegram';
 
 (async () => {
   await connectDB();
   await startServer();
 
-  setInterval(() => new SnapshotService().sync(), 5 * 60 * 1000);
+  cron.schedule('*/5 * * * *', () => new SnapshotService().sync());
+
+  new TelegramBot().getData();
 })();

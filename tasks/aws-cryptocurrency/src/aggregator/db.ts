@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { Env } from '../Env';
 import { SnapshotModel } from './models/snapshot';
 
 export let db: DataSource;
@@ -9,7 +10,7 @@ export async function connectDB(): Promise<void> {
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: process.env.SQL_PASSWORD,
+    password: Env.SQL_PASSWORD,
     database: 'cryptocurrency',
     entities: [SnapshotModel],
     synchronize: true,
