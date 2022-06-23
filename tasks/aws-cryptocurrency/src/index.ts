@@ -11,5 +11,5 @@ import { TelegramBot } from './telegram-bot/telegram';
 
   cron.schedule('*/5 * * * *', () => new SnapshotService().sync());
 
-  new TelegramBot().getData();
+  new TelegramBot().getUpdates();
 })();
