@@ -2,26 +2,11 @@ import { Request, Response } from 'express';
 import { MoreThan } from 'typeorm';
 import { Env } from '../../env';
 import { db } from '../db';
+import { meanPrice } from '../functions/price';
 import { SnapshotModel } from '../models/snapshot';
 
-function meanPrice(coin): number {
-  const { result, sourceCount } = Object.entries(coin).reduce(
-    (acc, [key, value]: [string, number | null]) => {
-      if (key.endsWith('Value') && value !== null) {
-        acc.result += value;
-        acc.sourceCount++;
-      }
-
-      return acc;
-    },
-    { result: 0, sourceCount: 0 },
-  );
-
-  return result / sourceCount;
-}
-
 export class CoinController {
-  public async getData(req: Request, res: Response): Promise<void> {
+  public async getCoins(req: Request, res: Response): Promise<void> {
     const snapshotRepo = db.getRepository(SnapshotModel);
     const result: Record<string, number> = {};
 
@@ -36,6 +21,31 @@ export class CoinController {
     for (const coin of recentList) {
       result[coin.cryptocurrencyName] = meanPrice(coin);
     }
+
+    res.status(200).send(result);
+  }
+
+  public async getCoin(req: Request, res: Response): Promise<void> {
+    const snapshotRepo = db.getRepository(SnapshotModel);
+    const snapshots = await snapshotRepo.find({
+      where: {
+        cryptocurrencyName: req.query.coin?.toString(),
+        createdAt: MoreThan(new Date(Date.now() - 24 * 60 * 60 * 1000)),
+      },
+    });
+
+    const terms = [30, 60, 3 * 60, 6 * 60, 12 * 60, 24 * 60];
+
+    const result = terms.map((term) => {
+      const filtered = snapshots.filter(
+        (snapshot) => snapshot.createdAt > new Date(Date.now() - term * 60 * 1000),
+      );
+
+      return {
+        term,
+        price: filtered.reduce((acc, value) => acc + meanPrice(value), 0) / filtered.length,
+      };
+    });
 
     res.status(200).send(result);
   }
