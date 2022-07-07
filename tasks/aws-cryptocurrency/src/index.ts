@@ -5,6 +5,9 @@ import { connectDB } from './aggregator/db';
 import { SnapshotService } from './aggregator/services/snapshot';
 import { TelegramBot } from './telegram-bot/telegram';
 
+process.on('uncaughtException', (err) => console.error(err));
+process.on('unhandledRejection', (reason) => console.error(reason as any));
+
 (async () => {
   await connectDB();
   await startServer();

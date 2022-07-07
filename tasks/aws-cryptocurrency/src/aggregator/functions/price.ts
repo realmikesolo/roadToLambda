@@ -15,6 +15,8 @@ export function meanPrice(coin): number {
 }
 
 export function roundPrice(price: number): string {
+  if (!price) throw new Error('No price');
+
   if (price < 1) {
     let value = price.toString();
     if (value.includes('e')) {
