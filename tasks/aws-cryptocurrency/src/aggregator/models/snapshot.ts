@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'snapshots' })
-export class SnapshotModel {
+export class SnapshotModel extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 

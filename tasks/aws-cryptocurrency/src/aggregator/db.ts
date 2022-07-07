@@ -1,18 +1,19 @@
 import { DataSource } from 'typeorm';
 import { Env } from '../env';
 import { SnapshotModel } from './models/snapshot';
+import { UserModel } from './models/user';
 
 export let db: DataSource;
 
 export async function connectDB(): Promise<void> {
   db = new DataSource({
     type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
+    host: Env.SQL_HOST,
+    port: Env.SQL_PORT,
+    username: Env.SQL_USERNAME,
     password: Env.SQL_PASSWORD,
     database: 'cryptocurrency',
-    entities: [SnapshotModel],
+    entities: [SnapshotModel, UserModel],
     synchronize: true,
   });
 
