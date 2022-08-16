@@ -7,6 +7,8 @@ provider:
   memorySize: 128
   timeout: 10
   versionFunctions: false
+  environment:
+    AWS_COGNITO_CLIENT_ID: 38ccodrt0knar0soc0kqubf16u
 
 functions:
   getStarted:
@@ -15,6 +17,18 @@ functions:
       - http:
           method: GET
           path: /name
+  register:
+    handler: src/handlers/register.handler
+    events:
+      - http:
+          method: POST
+          path: /register
+          request:
+            schemas:
+              application/json: ${file(schemas/register.json)}
+  autoVerify:
+    handler:  src/handlers/auto-verify.handler
+  
 
 plugins:
   - serverless-plugin-typescript
