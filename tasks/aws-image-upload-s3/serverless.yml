@@ -1,0 +1,47 @@
+service: LambdaTeam
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-central-1
+  memorySize: 128
+  timeout: 10
+  versionFunctions: false
+  environment:
+    AWS_COGNITO_CLIENT_ID: 38ccodrt0knar0soc0kqubf16u
+    AWS_COGNITO_USER_POOL_ID: eu-central-1_DjiIEiXUE
+
+functions:  
+  authRegister:
+    handler: src/handlers/auth/register.handler
+    events:
+      - http:
+          method: POST
+          path: /register
+          request:
+            schemas:
+              application/json: ${file(schemas/auth/register.json)}
+  authLogin:
+    handler: src/handlers/auth/login.handler
+    events:
+      - http:
+          method: POST
+          path: /login
+          request:
+            schemas:
+              application/json: ${file(schemas/auth/login.json)}
+  authAutoVerify:
+    handler: src/handlers/auth/auto-verify.handler
+  authorizer:
+    handler: src/handlers/auth/authorizer.handler
+
+plugins:
+  - serverless-plugin-typescript
+
+custom:
+  authorizer: 
+    name: authorizer
+    managedExternally: false
+    resultTtlInSeconds: 0
+    identitySource: method.request.header.Authorization
+    identityValidationExpression: Bearer.*

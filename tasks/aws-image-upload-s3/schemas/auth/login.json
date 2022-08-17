@@ -4,21 +4,14 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "name",
-    "email",
+    "username",
     "password"
   ],
   "properties": {
-    "name": {
+    "username": {
       "type": "string",
       "minLength": 2,
       "maxLength": 32
-    },
-    "email": {
-      "type": "string",
-      "format": "email",
-      "minLength": 3,
-      "maxLength": 256
     },
     "password": {
       "type": "string",

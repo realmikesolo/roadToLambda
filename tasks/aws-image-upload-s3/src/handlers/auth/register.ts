@@ -1,21 +1,20 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import {
   CognitoIdentityProviderClient,
-  ConfirmSignUpCommand,
   SignUpCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
-import { Env } from '../Env';
+import { Env } from '../../env';
 
-const cognito = new CognitoIdentityProviderClient({ region: 'eu-central-1' });
+const cognito = new CognitoIdentityProviderClient({ region: Env.AWS_REGION });
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   try {
-    const { name, email, password } = JSON.parse(event.body!);
+    const { username, email, password } = JSON.parse(event.body!);
 
     const res = await cognito.send(
       new SignUpCommand({
         ClientId: Env.AWS_COGNITO_CLIENT_ID,
-        Username: name,
+        Username: username,
         Password: password,
         UserAttributes: [{ Name: 'email', Value: email }],
       }),
