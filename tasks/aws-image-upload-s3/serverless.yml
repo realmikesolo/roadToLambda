@@ -10,8 +10,19 @@ provider:
   environment:
     AWS_COGNITO_CLIENT_ID: 38ccodrt0knar0soc0kqubf16u
     AWS_COGNITO_USER_POOL_ID: eu-central-1_DjiIEiXUE
+    AWS_S3_BUCKET_NAME: lambda-team-s3-images
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:DeleteObject
+            - s3:ListBucket
+          Resource:
+            - arn:aws:s3:::${self:provider.environment.AWS_S3_BUCKET_NAME}*
 
-functions:  
+functions:
   authRegister:
     handler: src/handlers/auth/register.handler
     events:
@@ -34,12 +45,33 @@ functions:
     handler: src/handlers/auth/auto-verify.handler
   authorizer:
     handler: src/handlers/auth/authorizer.handler
+  create:
+    handler: src/handlers/image/create.handler
+    events:
+      - http:
+          method: POST
+          path: /image
+          authorizer: ${self:custom.authorizer}
+  list:
+    handler: src/handlers/image/list.handler
+    events:
+      - http:
+          method: GET
+          path: /image
+          authorizer: ${self:custom.authorizer}
+  delete:
+    handler: src/handlers/image/delete.handler
+    events:
+      - http:
+          method: DELETE
+          path: /image/{id}
+          authorizer: ${self:custom.authorizer}
 
 plugins:
   - serverless-plugin-typescript
 
 custom:
-  authorizer: 
+  authorizer:
     name: authorizer
     managedExternally: false
     resultTtlInSeconds: 0

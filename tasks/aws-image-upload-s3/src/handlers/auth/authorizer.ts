@@ -1,7 +1,7 @@
 import { Handler } from 'aws-lambda';
 import { verify, VerifyOptions } from 'jsonwebtoken';
-import { Env } from '../../Env';
 import jwksClient from 'jwks-rsa';
+import { Env } from '../../env';
 
 export const handler: Handler = (event, context, callback) => {
   const token = (event.authorizationToken || event.header.authorization).slice(7);
