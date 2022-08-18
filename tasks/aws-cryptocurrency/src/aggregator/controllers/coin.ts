@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { MoreThan } from 'typeorm';
 import { Env } from '../../env';
+import { redis } from '../db';
 import { meanPrice } from '../functions/price';
 import { SnapshotModel } from '../models/snapshot';
 
@@ -8,15 +9,38 @@ export class CoinController {
   public async getCoins(req: Request, res: Response): Promise<void> {
     const result: Record<string, number> = {};
 
-    const recentList = await SnapshotModel.find({
-      where: {
-        createdAt: MoreThan(new Date(Date.now() - (Env.STAGE === 'dev' ? 24 * 60 : 6) * 60 * 1000)),
-      },
-      take: 20,
-      order: { createdAt: 'DESC' },
-    });
+    let coins: any = await redis.get('coins');
+    if (!coins) {
+      console.debug('fetching');
+      coins = await SnapshotModel.find({
+        where: {
+          createdAt: MoreThan(
+            new Date(Date.now() - (Env.STAGE === 'dev' ? 24 * 60 : 6) * 60 * 1000),
+          ),
+        },
+        take: 20,
+        order: { createdAt: 'DESC' },
+      });
 
-    for (const coin of recentList) {
+      await redis.setex(
+        'coins',
+        5 * 60,
+        JSON.stringify(
+          coins.map((x) => ({
+            cryptocurrencyName: x.cryptocurrencyName,
+            coinbaseValue: x.coinbaseValue,
+            coinmarketcapValue: x.coinmarketcapValue,
+            coinstatsValue: x.coinstatsValue,
+            coinpaprikaValue: x.coinpaprikaValue,
+            kucoinValue: x.kucoinValue,
+          })),
+        ),
+      );
+    } else {
+      coins = JSON.parse(coins);
+    }
+
+    for (const coin of coins) {
       result[coin.cryptocurrencyName] = meanPrice(coin);
     }
 
