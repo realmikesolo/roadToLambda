@@ -2,8 +2,10 @@ import { DataSource } from 'typeorm';
 import { Env } from '../env';
 import { SnapshotModel } from './models/snapshot';
 import { UserModel } from './models/user';
+import Redis from 'ioredis';
 
 export let db: DataSource;
+export const redis = new Redis();
 
 export async function connectDB(): Promise<void> {
   db = new DataSource({
