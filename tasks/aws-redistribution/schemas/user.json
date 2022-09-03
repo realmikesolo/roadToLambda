@@ -1,0 +1,26 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "shopToken",
+    "email",
+    "password"
+  ],
+  "properties": {
+    "shopToken": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 64
+    }
+  }
+}
