@@ -1,0 +1,54 @@
+service: redistribution
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-central-1
+  memorySize: 128
+  timeout: 10
+  versionFunctions: false
+  environment:
+    AWS_DISTRIBUTE_QUEUE_ARN: ${ssm:distribute-queue-arn}
+    AWS_DISTRIBUTE_QUEUE_URL: ${ssm:distribute-queue-url}
+    DB_NAME: ${ssm:db-name}
+    DB_USERNAME: ${ssm:db-username}
+    DB_PASSWORD: ${ssm:db-password}
+    DB_PORT: ${ssm:db-port}
+    DB_HOST: ${ssm:db-host}
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+          Resource:
+            - ${self:provider.environment.AWS_DISTRIBUTE_QUEUE_ARN}
+
+plugins:
+  - serverless-plugin-typescript
+
+functions:
+  distribute:
+    handler: src/handlers/distribute.handler
+    events:
+      - http:
+          method: POST
+          path: /distribution
+          request:
+            schemas:
+              application/json: ${file(schemas/user.json)}
+
+  saveUser:
+    handler: src/listeners/save-user.handler
+    vpc:
+      securityGroupIds:
+        - ${ssm:security-group-id}
+      subnetIds:
+        - ${ssm:subnet-id-1}
+        - ${ssm:subnet-id-2}
+        - ${ssm:subnet-id-3}
+    # reservedConcurrency: 10
+    events:
+      - sqs:
+          arn: ${self:provider.environment.AWS_DISTRIBUTE_QUEUE_ARN}
