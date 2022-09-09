@@ -18,6 +18,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
           email,
           password,
         }),
+        MessageGroupId: 'users',
       }),
     );
 

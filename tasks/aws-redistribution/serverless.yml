@@ -41,14 +41,16 @@ functions:
 
   saveUser:
     handler: src/listeners/save-user.handler
+    timeout: 60
     vpc:
       securityGroupIds:
         - ${ssm:security-group-id}
       subnetIds:
-        - ${ssm:subnet-id-1}
-        - ${ssm:subnet-id-2}
         - ${ssm:subnet-id-3}
-    # reservedConcurrency: 10
+        - ${ssm:subnet-id-2}
+        - ${ssm:subnet-id-1}
     events:
       - sqs:
           arn: ${self:provider.environment.AWS_DISTRIBUTE_QUEUE_ARN}
+          batchSize: 10
+          enabled: true
