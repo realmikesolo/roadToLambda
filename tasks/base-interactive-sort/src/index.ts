@@ -1,3 +1,5 @@
+import { question } from './questions';
+
 sort();
 
 function sort(): void {
@@ -8,9 +10,7 @@ function sort(): void {
     input = data.toString('utf8');
     process.stdin.removeAllListeners('data');
 
-    process.stdout.write(
-      'How would you like to sort values:\n1. Words by name (from A to Z).\n2. Digits in ascending order.\n3. Digits in descending order.\n4. Words by quantity of letters.\n5. Only unique words.\n6. Only unqiue values.\n\n',
-    );
+    process.stdout.write(question);
     process.stdout.write('Select (1 - 5) and press ENTER: ');
 
     process.stdin.on('data', (data) => {

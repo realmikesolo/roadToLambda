@@ -1,18 +1,7 @@
 import 'dotenv/config';
-import { google } from 'googleapis';
 import { prompt } from 'inquirer';
-import fs from 'node:fs';
-import { Env } from './env';
+import { create } from './google';
 import { shorterLink } from './link-shorter';
-
-const oauth2Client = new google.auth.OAuth2(
-  Env.GOOGLE_CLIENT_ID,
-  Env.GOOGLE_CLIENT_SECRET,
-  Env.GOOGLE_REDIRECT_URL,
-);
-const drive = google.drive({ version: 'v3', auth: oauth2Client });
-
-oauth2Client.setCredentials({ refresh_token: Env.GOOGLE_REFRESH_TOKEN });
 
 uploadPhoto();
 
@@ -48,25 +37,7 @@ async function uploadPhoto(): Promise<void> {
 
   const fullMimeType = `image/${mimeType.slice(1)}`;
 
-  const myPhoto = await drive.files.create({
-    requestBody: {
-      name: fileName,
-      mimeType: fullMimeType,
-      parents: [Env.GOOGLE_DRIVE_FOLDER_ID],
-    },
-    media: {
-      mimeType: fullMimeType,
-      body: fs.createReadStream(path.replace(/'+/g, '')),
-    },
-  });
-
-  await drive.permissions.create({
-    fileId: myPhoto.data.id!,
-    requestBody: {
-      role: 'reader',
-      type: 'anyone',
-    },
-  });
+  const myPhoto = await create(fileName, fullMimeType, path);
 
   const { shortLink } = await prompt({
     type: 'confirm',
