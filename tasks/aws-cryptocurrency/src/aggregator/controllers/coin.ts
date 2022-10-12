@@ -10,6 +10,7 @@ export class CoinController {
     const result: Record<string, number> = {};
 
     let coins: any = await redis.get('coins');
+    console.log(1, coins);
     if (!coins) {
       console.debug('fetching');
       coins = await SnapshotModel.find({
@@ -21,7 +22,7 @@ export class CoinController {
         take: 20,
         order: { createdAt: 'DESC' },
       });
-
+      console.log(2);
       await redis.setex(
         'coins',
         5 * 60,
@@ -38,12 +39,11 @@ export class CoinController {
       );
     } else {
       coins = JSON.parse(coins);
+      console.log('coins', coins);
     }
-
     for (const coin of coins) {
       result[coin.cryptocurrencyName] = meanPrice(coin);
     }
-
     res.status(200).send(result);
   }
 

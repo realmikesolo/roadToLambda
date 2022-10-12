@@ -7,4 +7,5 @@ export const Env = {
   DB_PASSWORD: process.env.DB_PASSWORD!,
   DB_PORT: Number(process.env.DB_PORT!),
   DB_HOST: process.env.DB_HOST!,
+  AWS_DYNAMODB_TABLE_NAME: process.env.AWS_DYNAMODB_TABLE_NAME!,
 };

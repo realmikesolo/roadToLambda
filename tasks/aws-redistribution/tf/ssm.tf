@@ -10,56 +10,38 @@ resource "aws_ssm_parameter" "distribute-queue-arn" {
   value = aws_sqs_queue.distribute-queue.arn
 }
 
-resource "aws_ssm_parameter" "db-name" {
-  name  = "db-name"
-  type  = "SecureString"
-  value = "admin"
-}
-
-resource "aws_ssm_parameter" "db-username" {
-  name  = "db-username"
-  type  = "SecureString"
-  value = "admin"
-}
-
-resource "aws_ssm_parameter" "db-password" {
-  name  = "db-password"
-  type  = "SecureString"
-  value = aws_db_instance.mysql.password
+resource "aws_ssm_parameter" "db-host" {
+  name  = "db-host"
+  type  = "String"
+  value = "lambda-team-1.cqjlbm8qlo33.eu-central-1.rds.amazonaws.com"
 }
 
 resource "aws_ssm_parameter" "db-port" {
   name  = "db-port"
-  type  = "SecureString"
-  value = aws_db_instance.mysql.port
+  type  = "String"
+  value = 5432
 }
 
-resource "aws_ssm_parameter" "db-host" {
-  name  = "db-host"
-  type  = "SecureString"
-  value = aws_db_instance.mysql.address
+resource "aws_ssm_parameter" "db-username" {
+  name  = "db-username"
+  type  = "String"
+  value = "postgres"
 }
 
-resource "aws_ssm_parameter" "security-group-id" {
-  name  = "security-group-id"
-  type  = "SecureString"
-  value = "sg-0b973760885ce9ff6"
+resource "aws_ssm_parameter" "db-password" {
+  name  = "db-password"
+  type  = "String"
+  value = "postgres"
 }
 
-resource "aws_ssm_parameter" "subnet-id-1" {
-  name  = "subnet-id-1"
-  type  = "SecureString"
-  value = "subnet-0df9fcde25b0ca9cc"
+resource "aws_ssm_parameter" "db-name" {
+  name  = "db-name"
+  type  = "String"
+  value = "my_db"
 }
 
-resource "aws_ssm_parameter" "subnet-id-2" {
-  name  = "subnet-id-2"
-  type  = "SecureString"
-  value = "subnet-015a8d445d3dc30c5"
-}
-
-resource "aws_ssm_parameter" "subnet-id-3" {
-  name  = "subnet-id-3"
-  type  = "SecureString"
-  value = "subnet-022faa672ba8a8298"
+resource "aws_ssm_parameter" "dynamodb-stream-arn" {
+  name = "dynamodb-stream-arn"
+  type = "String"
+  value = aws_dynamodb_table.redistribution.stream_arn
 }

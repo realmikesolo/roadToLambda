@@ -119,7 +119,6 @@ export class TelegramBot {
     const data = await axios
       .get(`http://${Env.SERVER_URL}:${Env.SERVER_PORT}/get_coins`)
       .then((res) => res.data);
-
     await axios.post(
       `https://api.telegram.org/bot${Env.TELEGRAM_BOT_API}/sendMessage`,
       {},

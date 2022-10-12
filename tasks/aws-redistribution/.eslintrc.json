@@ -1,3 +1,13 @@
 {
-  "extends": "@hibanka/eslint-config"
+  "extends": "@hibanka/eslint-config",
+  "overrides": [
+    {
+      "files": [
+        "**/models/*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": "off"
+      }
+    }
+  ]
 }

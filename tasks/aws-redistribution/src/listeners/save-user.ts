@@ -1,53 +1,57 @@
-import 'reflect-metadata';
+import { BatchWriteItemCommand, DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { SQSHandler } from 'aws-lambda';
-import path from 'node:path';
-import { DataSource } from 'typeorm';
 import { Env } from '../env';
-import { User } from '../models/user';
+import { chunk } from '../utils';
+
+const ddb = new DynamoDBClient({ region: Env.AWS_REGION });
 
 export const handler: SQSHandler = async (event) => {
-  const AppDataSource = new DataSource({
-    type: 'mysql',
-    host: Env.DB_HOST,
-    port: Env.DB_PORT,
-    username: Env.DB_USERNAME,
-    password: Env.DB_PASSWORD,
-    database: Env.DB_NAME,
-    synchronize: true,
-    logging: true,
-    connectTimeout: 50_000,
-    acquireTimeout: 50_000,
-    entities: [path.resolve(__dirname, '../models/*.{js,ts}')],
-  });
-
-  console.log('Connecting');
-  console.log('Force connecting');
-
-  await AppDataSource.initialize();
-
-  console.log('Connected');
-  let error;
   try {
-    await User.insert(
+    const chunked = chunk(
       event.Records.map((x) => {
         const body = JSON.parse(x.body);
-        const user = new User();
 
-        user.id = body.id;
-        user.shopToken = body.shopToken;
-        user.email = body.email;
-        user.password = body.password;
-
-        return user;
+        return {
+          PutRequest: {
+            Item: {
+              hashKey: { S: `u:${body.userId}` },
+              rangeKey: { S: `s:${body.shopToken}` },
+              word: { S: body.word },
+              password: { S: body.password },
+            },
+          },
+        };
+      }),
+      25,
+    );
+    await Promise.all(
+      chunked.map(async (x) => {
+        await ddb.send(new BatchWriteItemCommand({ RequestItems: { [Env.AWS_DYNAMODB_TABLE_NAME]: x } }));
       }),
     );
+    //
+    // const result = await ddb.send(
+    //   new BatchWriteItemCommand({
+    //     RequestItems: {
+    //       [Env.AWS_DYNAMODB_TABLE_NAME]: event.Records.map((x) => {
+    //         const body = JSON.parse(x.body);
+
+    //         return {
+    //           PutRequest: {
+    //             Item: {
+    //               hashKey: { S: `u:${body.userId}` },
+    //               rangeKey: { S: `s:${body.shopToken}` },
+    //               word: { S: body.word },
+    //               password: { S: body.password },
+    //             },
+    //           },
+    //         };
+    //       }),
+    //     },
+    //   }),
+    // );
+    // console.debug('result', JSON.stringify(result, null, 2));
   } catch (e) {
-    error = e;
     console.error(e);
-  } finally {
-    await AppDataSource.destroy();
-  }
-  if (error) {
-    throw error;
   }
 };

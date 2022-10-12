@@ -4,15 +4,19 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "userId",
     "shopToken",
-    "email",
+    "word",
     "password"
   ],
   "properties": {
+    "userId": {
+      "type": "string"
+    },
     "shopToken": {
       "type": "string"
     },
-    "email": {
+    "word": {
       "type": "string",
       "minLength": 3,
       "maxLength": 64
