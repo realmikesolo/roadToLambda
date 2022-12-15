@@ -1,7 +1,6 @@
+import path from 'node:path';
 import { Sequelize } from 'sequelize-typescript';
 import { Env } from './env';
-import { OrderModel } from './models/order';
-import { TerritoryModel } from './models/territory';
 
 export let db: Sequelize;
 
@@ -13,7 +12,7 @@ export async function connectDB(): Promise<void> {
     dialect: 'postgres',
     username: Env.DB_USERNAME,
     password: Env.DB_PASSWORD,
-    models: [OrderModel, TerritoryModel],
+    models: [path.resolve(__dirname, './models/*.{js,ts}')],
     logging: false,
   });
 
