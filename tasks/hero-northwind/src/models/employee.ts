@@ -37,38 +37,34 @@ export default class EmployeeModel extends Model {
   @Column
   declare hireDate: Date;
 
-  @Column('text')
+  @Column
   declare address: string;
 
-  @AllowNull
-  @Column('text')
+  @Column
   declare city: string;
 
   @AllowNull
-  @Column('text')
+  @Column
   declare region: string;
 
-  @AllowNull
   @Column
   declare postalCode: string;
 
-  @AllowNull
-  @Column('text')
+  @Column
   declare country: string;
 
-  @AllowNull
   @Column
   declare homePhone: string;
 
-  @AllowNull
   @Column
   declare extension: string;
 
   @Column('text')
   declare notes: string;
 
+  @AllowNull
   @Column
-  declare reportsTo: string;
+  declare reportsTo: number;
 
   @BelongsToMany(() => TerritoryModel, () => EmployeeTerritoryModel)
   territories: TerritoryModel[];

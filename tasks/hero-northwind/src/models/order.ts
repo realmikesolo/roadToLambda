@@ -35,6 +35,7 @@ export default class OrderModel extends Model {
   @Column
   declare requiredDate: Date;
 
+  @AllowNull
   @Column
   declare shippedDate: Date;
 
