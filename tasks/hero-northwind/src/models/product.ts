@@ -34,7 +34,7 @@ export default class ProductModel extends Model {
   @Column
   declare quantityPerUnit: string;
 
-  @Column
+  @Column('decimal(10,2)')
   declare unitPrice: number;
 
   @Column
