@@ -9,7 +9,7 @@ export default class CategoryModel extends Model {
   declare categoryID: number;
 
   @Column
-  declare categoryName: number;
+  declare categoryName: string;
 
   @Column
   declare description: string;
