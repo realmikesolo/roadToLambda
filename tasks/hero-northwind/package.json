@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.25.13",
     "dotenv": "^16.0.2",
     "fastify": "^4.10.2",
     "pg": "^8.8.0",
