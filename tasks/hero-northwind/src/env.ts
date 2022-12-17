@@ -7,4 +7,6 @@ export const Env = {
   DB_NAME: process.env.DB_NAME!,
   DB_HOST: process.env.DB_HOST!,
   DB_PORT: Number(process.env.DB_PORT!),
+
+  PAGE_LIMIT: Number(process.env.PAGE_LIMIT!),
 };
