@@ -11,11 +11,25 @@ const GetEmployeesOptions = {
   },
 };
 
+const GetEmployeeOptions = {
+  schema: {
+    querystring: Type.Object({ id: Type.Number() }),
+  },
+};
+
 export async function employeeRouter(fastify: FastifyInstance): Promise<void> {
   fastify.get('/employees', GetEmployeesOptions, (req: GetEmployeesRequest, res) =>
     employeeController.getEmployees(req, res),
   );
+
+  fastify.get('/employee', GetEmployeeOptions, (req: GetEmployeeRequest, res) =>
+    employeeController.getEmployee(req, res),
+  );
 }
+
+export type GetEmployeeRequest = FastifyRequest<{
+  Querystring: Static<typeof GetEmployeeOptions['schema']['querystring']>;
+}>;
 
 export type GetEmployeesRequest = FastifyRequest<{
   Querystring: Static<typeof GetEmployeesOptions['schema']['querystring']>;
@@ -27,4 +41,8 @@ export type GetEmployeesResponse = {
   total: number;
   items: number;
   employees: EmployeeModel[];
+};
+
+export type GetEmployeeResponse = {
+  employee: EmployeeModel;
 };
