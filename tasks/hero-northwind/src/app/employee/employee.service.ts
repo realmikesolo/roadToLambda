@@ -12,4 +12,8 @@ export class EmployeeService {
   public async getEmployeesCount(): Promise<number> {
     return EmployeeModel.count();
   }
+
+  public async getEmployee(id: number): Promise<EmployeeModel | null> {
+    return EmployeeModel.findByPk(id);
+  }
 }
