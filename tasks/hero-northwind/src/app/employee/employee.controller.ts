@@ -22,8 +22,8 @@ export class EmployeeController {
     const response: GetEmployeesResponse = {
       page,
       pages: Math.ceil(rows / Env.PAGE_LIMIT),
-      total: rows,
       items: Env.PAGE_LIMIT,
+      total: rows,
       employees: employees.map((employee) => employee.toJSON()),
     };
 

@@ -38,8 +38,8 @@ export type GetEmployeesRequest = FastifyRequest<{
 export type GetEmployeesResponse = {
   page: number;
   pages: number;
-  total: number;
   items: number;
+  total: number;
   employees: EmployeeModel[];
 };
 
