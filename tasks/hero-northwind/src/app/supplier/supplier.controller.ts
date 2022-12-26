@@ -22,8 +22,8 @@ export class SupplierController {
     const response: GetSuppliersResponse = {
       page,
       pages: Math.ceil(rows / Env.PAGE_LIMIT),
-      total: rows,
       items: Env.PAGE_LIMIT,
+      total: rows,
       suppliers: suppliers.map((supplier) => supplier.toJSON()),
     };
 
