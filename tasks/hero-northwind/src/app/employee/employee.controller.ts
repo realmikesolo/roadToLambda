@@ -24,7 +24,28 @@ export class EmployeeController {
       pages: Math.ceil(rows / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
       total: rows,
-      employees: employees.map((employee) => employee.toJSON()),
+      employees: employees.map((employee) => {
+        employee = employee.toJSON();
+
+        return {
+          employeeID: employee.employeeID,
+          lastName: employee.lastName,
+          firstName: employee.firstName,
+          title: employee.title,
+          titleOfCourtesy: employee.titleOfCourtesy,
+          birthDate: employee.birthDate,
+          hireDate: employee.hireDate,
+          address: employee.address,
+          city: employee.city,
+          region: employee.region,
+          postalCode: employee.postalCode,
+          country: employee.country,
+          homePhone: employee.homePhone,
+          extension: employee.extension,
+          notes: employee.notes,
+          reportsTo: employee.reportsTo,
+        };
+      }),
     };
 
     res.status(200).send(response);
@@ -38,8 +59,30 @@ export class EmployeeController {
       return res.status(404).send({ message: 'Employee not found' });
     }
 
+    const employeeJSON = employee.toJSON();
+
     const response: GetEmployeeResponse = {
-      employee: employee.toJSON(),
+      employee: {
+        reportID: employeeJSON.employee?.employeeID ?? null,
+        reportFirstName: employeeJSON.employee?.firstName ?? null,
+        reportLastName: employeeJSON.employee?.lastName ?? null,
+        employeeID: employeeJSON.employeeID,
+        lastName: employeeJSON.lastName,
+        firstName: employeeJSON.firstName,
+        title: employeeJSON.title,
+        titleOfCourtesy: employeeJSON.titleOfCourtesy,
+        birthDate: employeeJSON.birthDate,
+        hireDate: employeeJSON.hireDate,
+        address: employeeJSON.address,
+        city: employeeJSON.city,
+        region: employeeJSON.region,
+        postalCode: employeeJSON.postalCode,
+        country: employeeJSON.country,
+        homePhone: employeeJSON.homePhone,
+        extension: employeeJSON.extension,
+        notes: employeeJSON.notes,
+        reportsTo: employeeJSON.reportsTo,
+      },
     };
 
     res.status(200).send(response);

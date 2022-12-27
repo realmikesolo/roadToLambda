@@ -1,8 +1,10 @@
 import {
   AllowNull,
   AutoIncrement,
+  BelongsTo,
   BelongsToMany,
   Column,
+  ForeignKey,
   HasMany,
   Model,
   PrimaryKey,
@@ -62,6 +64,7 @@ export default class EmployeeModel extends Model {
   @Column('text')
   declare notes: string;
 
+  @ForeignKey(() => EmployeeModel)
   @AllowNull
   @Column
   declare reportsTo: number;
@@ -71,4 +74,7 @@ export default class EmployeeModel extends Model {
 
   @HasMany(() => OrderModel)
   orders: OrderModel[];
+
+  @BelongsTo(() => EmployeeModel)
+  employee: EmployeeModel;
 }

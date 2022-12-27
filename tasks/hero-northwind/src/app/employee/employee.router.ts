@@ -40,9 +40,29 @@ export type GetEmployeesResponse = {
   pages: number;
   items: number;
   total: number;
-  employees: EmployeeModel[];
+  employees: Array<Omit<Employee, 'reportID' | 'reportFirstName' | 'reportLastName'>>;
 };
 
 export type GetEmployeeResponse = {
-  employee: EmployeeModel;
+  employee: Employee;
 };
+
+export type Employee = { reportID: number; reportFirstName: string; reportLastName: string } & Pick<
+  EmployeeModel,
+  | 'employeeID'
+  | 'lastName'
+  | 'firstName'
+  | 'title'
+  | 'titleOfCourtesy'
+  | 'birthDate'
+  | 'hireDate'
+  | 'address'
+  | 'city'
+  | 'region'
+  | 'postalCode'
+  | 'country'
+  | 'homePhone'
+  | 'extension'
+  | 'notes'
+  | 'reportsTo'
+>;
