@@ -14,6 +14,13 @@ export class EmployeeService {
   }
 
   public async getEmployee(id: number): Promise<EmployeeModel | null> {
-    return EmployeeModel.findByPk(id);
+    return EmployeeModel.findByPk(id, {
+      include: [
+        {
+          model: EmployeeModel,
+          attributes: ['lastName', 'firstName', 'employeeID'],
+        },
+      ],
+    });
   }
 }
