@@ -5,7 +5,6 @@ import {
   GetProductResponse,
   GetProductsRequest,
   GetProductsResponse,
-  Product,
 } from './product.router';
 import { ProductService } from './product.service';
 
@@ -27,6 +26,7 @@ export class ProductController {
       total: rows,
       products: products.map((product) => {
         product = product.toJSON();
+
         return {
           productID: product.productID,
           productName: product.productName,
@@ -54,22 +54,22 @@ export class ProductController {
       return res.status(404).send({ message: 'Product not found' });
     }
 
-    const productJSON: Product = {
-      productID: product.toJSON().productID,
-      productName: product.toJSON().productName,
-      supplierID: product.toJSON().supplierID,
-      categoryID: product.toJSON().categoryID,
-      quantityPerUnit: product.toJSON().quantityPerUnit,
-      unitPrice: product.toJSON().unitPrice,
-      unitsInStock: product.toJSON().unitsInStock,
-      unitsOnOrder: product.toJSON().unitsOnOrder,
-      reorderLevel: product.toJSON().reorderLevel,
-      discontinued: product.toJSON().discontinued,
-      supplierName: product.toJSON().supplier.companyName,
-    };
+    const productJSON = product.toJSON();
 
     const response: GetProductResponse = {
-      product: productJSON,
+      product: {
+        productID: productJSON.productID,
+        productName: productJSON.productName,
+        supplierID: productJSON.supplierID,
+        categoryID: productJSON.categoryID,
+        quantityPerUnit: productJSON.quantityPerUnit,
+        unitPrice: productJSON.unitPrice,
+        unitsInStock: productJSON.unitsInStock,
+        unitsOnOrder: productJSON.unitsOnOrder,
+        reorderLevel: productJSON.reorderLevel,
+        discontinued: productJSON.discontinued,
+        supplierName: productJSON.supplier.companyName,
+      },
     };
 
     res.status(200).send(response);
