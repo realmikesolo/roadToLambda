@@ -40,9 +40,25 @@ export type GetSuppliersResponse = {
   pages: number;
   items: number;
   total: number;
-  suppliers: SupplierModel[];
+  suppliers: Supplier[];
 };
 
 export type GetSupplierResponse = {
-  supplier: SupplierModel;
+  supplier: Supplier;
 };
+
+export type Supplier = Pick<
+  SupplierModel,
+  | 'supplierID'
+  | 'companyName'
+  | 'contactName'
+  | 'contactTitle'
+  | 'address'
+  | 'city'
+  | 'region'
+  | 'postalCode'
+  | 'country'
+  | 'phone'
+  | 'fax'
+  | 'homePage'
+>;
