@@ -1,5 +1,6 @@
 import { FastifyReply } from 'fastify';
 import { Env } from '../../env';
+import SupplierModel from '../../models/supplier';
 import {
   GetProductRequest,
   GetProductResponse,
@@ -25,8 +26,6 @@ export class ProductController {
       items: Env.PAGE_LIMIT,
       total: rows,
       products: products.map((product) => {
-        product = product.toJSON();
-
         return {
           productID: product.productID,
           productName: product.productName,
@@ -54,21 +53,21 @@ export class ProductController {
       return res.status(404).send({ message: 'Product not found' });
     }
 
-    const productJSON = product.toJSON();
+    const supplier: SupplierModel = product.getDataValue('supplier');
 
     const response: GetProductResponse = {
       product: {
-        productID: productJSON.productID,
-        productName: productJSON.productName,
-        supplierID: productJSON.supplierID,
-        categoryID: productJSON.categoryID,
-        quantityPerUnit: productJSON.quantityPerUnit,
-        unitPrice: productJSON.unitPrice,
-        unitsInStock: productJSON.unitsInStock,
-        unitsOnOrder: productJSON.unitsOnOrder,
-        reorderLevel: productJSON.reorderLevel,
-        discontinued: productJSON.discontinued,
-        supplierName: productJSON.supplier.companyName,
+        productID: product.productID,
+        productName: product.productName,
+        supplierID: product.supplierID,
+        categoryID: product.categoryID,
+        quantityPerUnit: product.quantityPerUnit,
+        unitPrice: product.unitPrice,
+        unitsInStock: product.unitsInStock,
+        unitsOnOrder: product.unitsOnOrder,
+        reorderLevel: product.reorderLevel,
+        discontinued: product.discontinued,
+        supplierName: supplier.companyName,
       },
     };
 

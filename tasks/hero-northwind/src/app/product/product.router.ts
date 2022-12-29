@@ -27,13 +27,17 @@ export async function productRouter(fastify: FastifyInstance): Promise<void> {
   );
 }
 
+export type GetProductRequest = FastifyRequest<{
+  Querystring: Static<typeof GetProductOptions['schema']['querystring']>;
+}>;
+
 export type GetProductsRequest = FastifyRequest<{
   Querystring: Static<typeof GetProductsOptions['schema']['querystring']>;
 }>;
 
-export type GetProductRequest = FastifyRequest<{
-  Querystring: Static<typeof GetProductOptions['schema']['querystring']>;
-}>;
+export type GetProductResponse = {
+  product: Product;
+};
 
 export type GetProductsResponse = {
   page: number;
@@ -41,10 +45,6 @@ export type GetProductsResponse = {
   items: number;
   total: number;
   products: Array<Omit<Product, 'supplierName'>>;
-};
-
-export type GetProductResponse = {
-  product: Product;
 };
 
 export type Product = Pick<
