@@ -47,7 +47,11 @@ export type GetEmployeeResponse = {
   employee: Employee;
 };
 
-export type Employee = { reportID: number; reportFirstName: string; reportLastName: string } & Pick<
+export type Employee = {
+  reportID: number | null;
+  reportFirstName: string | null;
+  reportLastName: string | null;
+} & Pick<
   EmployeeModel,
   | 'employeeID'
   | 'lastName'
