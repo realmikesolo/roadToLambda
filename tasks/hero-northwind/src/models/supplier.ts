@@ -7,6 +7,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Supplier } from '../app/supplier/supplier.router';
 import ProductModel from './product';
 
 @Table({ tableName: 'Suppliers', timestamps: false })
@@ -54,4 +55,21 @@ export default class SupplierModel extends Model {
 
   @HasMany(() => ProductModel)
   products: ProductModel[];
+
+  get toAPI(): Supplier {
+    return {
+      supplierID: this.supplierID,
+      companyName: this.companyName,
+      contactName: this.contactName,
+      contactTitle: this.contactTitle,
+      address: this.address,
+      city: this.city,
+      region: this.region,
+      postalCode: this.postalCode,
+      country: this.country,
+      phone: this.phone,
+      fax: this.fax,
+      homePage: this.homePage,
+    };
+  }
 }

@@ -24,7 +24,7 @@ export class SupplierController {
       pages: Math.ceil(rows / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
       total: rows,
-      suppliers: suppliers.map((supplier) => supplier.toJSON()),
+      suppliers: suppliers.map((supplier) => supplier.toAPI),
     };
 
     res.status(200).send(response);
@@ -39,7 +39,7 @@ export class SupplierController {
     }
 
     const response: GetSupplierResponse = {
-      supplier: supplier.toJSON(),
+      supplier: supplier.toAPI,
     };
 
     res.status(200).send(response);
