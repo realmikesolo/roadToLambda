@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Product } from '../app/product/product.router';
 import CategoryModel from './category';
 import OrderModel from './order';
 import OrderDetailModel from './orderDetail';
@@ -57,4 +58,19 @@ export default class ProductModel extends Model {
 
   @BelongsToMany(() => OrderModel, () => OrderDetailModel)
   orders: OrderModel[];
+
+  get toAPI(): Omit<Product, 'supplierName'> {
+    return {
+      productID: this.productID,
+      productName: this.productName,
+      supplierID: this.supplierID,
+      categoryID: this.categoryID,
+      quantityPerUnit: this.quantityPerUnit,
+      unitPrice: this.unitPrice,
+      unitsInStock: this.unitsInStock,
+      unitsOnOrder: this.unitsOnOrder,
+      reorderLevel: this.reorderLevel,
+      discontinued: this.discontinued,
+    };
+  }
 }
