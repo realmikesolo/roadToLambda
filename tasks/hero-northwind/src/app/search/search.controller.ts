@@ -15,21 +15,17 @@ export class SearchController {
         const products = await this.searchService.searchProducts(q);
 
         response = {
-          results: products.map((product) => {
-            return {
-              // TODO: duplicate in ProductController
-              productID: product.productID,
-              productName: product.productName,
-              supplierID: product.supplierID,
-              categoryID: product.categoryID,
-              quantityPerUnit: product.quantityPerUnit,
-              unitPrice: product.unitPrice,
-              unitsInStock: product.unitsInStock,
-              unitsOnOrder: product.unitsOnOrder,
-              reorderLevel: product.reorderLevel,
-              discontinued: product.discontinued,
-            };
-          }),
+          results: products.map((product) => product.toAPI),
+        };
+
+        res.status(200).send(response);
+        break;
+      }
+      case 'customers': {
+        const customers = await this.searchService.searchCustomers(q);
+
+        response = {
+          results: customers.map((customer) => customer.toAPI),
         };
 
         res.status(200).send(response);
