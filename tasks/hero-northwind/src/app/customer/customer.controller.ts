@@ -24,19 +24,7 @@ export class CustomerController {
       pages: Math.ceil(rows / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
       total: rows,
-      customers: customers.map((customer) => ({
-        customerID: customer.customerID,
-        companyName: customer.companyName,
-        contactName: customer.contactName,
-        contactTitle: customer.contactTitle,
-        address: customer.address,
-        city: customer.city,
-        region: customer.region,
-        postalCode: customer.postalCode,
-        country: customer.country,
-        phone: customer.phone,
-        fax: customer.fax,
-      })),
+      customers: customers.map((customer) => customer.toAPI),
     };
 
     res.status(200).send(response);
@@ -51,19 +39,7 @@ export class CustomerController {
     }
 
     const response: GetCustomerResponse = {
-      customer: {
-        customerID: customer.customerID,
-        companyName: customer.companyName,
-        contactName: customer.contactName,
-        contactTitle: customer.contactTitle,
-        address: customer.address,
-        city: customer.city,
-        region: customer.region,
-        postalCode: customer.postalCode,
-        country: customer.country,
-        phone: customer.phone,
-        fax: customer.fax,
-      },
+      customer: customer.toAPI,
     };
 
     res.status(200).send(response);
