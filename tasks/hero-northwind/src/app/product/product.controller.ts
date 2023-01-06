@@ -25,20 +25,7 @@ export class ProductController {
       pages: Math.ceil(rows / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
       total: rows,
-      products: products.map((product) => {
-        return {
-          productID: product.productID,
-          productName: product.productName,
-          supplierID: product.supplierID,
-          categoryID: product.categoryID,
-          quantityPerUnit: product.quantityPerUnit,
-          unitPrice: product.unitPrice,
-          unitsInStock: product.unitsInStock,
-          unitsOnOrder: product.unitsOnOrder,
-          reorderLevel: product.reorderLevel,
-          discontinued: product.discontinued,
-        };
-      }),
+      products: products.map((product) => product.toAPI),
     };
 
     res.status(200).send(response);
@@ -57,16 +44,7 @@ export class ProductController {
 
     const response: GetProductResponse = {
       product: {
-        productID: product.productID,
-        productName: product.productName,
-        supplierID: product.supplierID,
-        categoryID: product.categoryID,
-        quantityPerUnit: product.quantityPerUnit,
-        unitPrice: product.unitPrice,
-        unitsInStock: product.unitsInStock,
-        unitsOnOrder: product.unitsOnOrder,
-        reorderLevel: product.reorderLevel,
-        discontinued: product.discontinued,
+        ...product.toAPI,
         supplierName: supplier.companyName,
       },
     };
