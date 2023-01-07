@@ -1,5 +1,6 @@
 import { Static, Type } from '@sinclair/typebox';
 import { FastifyInstance, FastifyRequest } from 'fastify';
+import { Log } from '../../db';
 import { Customer } from '../customer/customer.router';
 import { Product } from '../product/product.router';
 import { SearchController } from './search.controller';
@@ -23,5 +24,9 @@ export type SearchByNameRequest = FastifyRequest<{
 }>;
 
 export type SearchByNameResponse = {
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   results: Array<Omit<Product, 'supplierName'> | Customer>;
 };
