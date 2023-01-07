@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyRequest } from 'fastify';
 import { Static, Type } from '@sinclair/typebox';
 import { EmployeeController } from './employee.controller';
 import EmployeeModel from '../../models/employee';
+import { Log } from '../../db';
 
 const employeeController = new EmployeeController();
 
@@ -40,10 +41,18 @@ export type GetEmployeesResponse = {
   pages: number;
   items: number;
   total: number;
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   employees: Array<Omit<Employee, 'reportID' | 'reportFirstName' | 'reportLastName'>>;
 };
 
 export type GetEmployeeResponse = {
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   employee: Employee;
 };
 
