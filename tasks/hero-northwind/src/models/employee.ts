@@ -10,6 +10,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Employee } from '../app/employee/employee.router';
 import EmployeeTerritoryModel from './employeeTerritory';
 import OrderModel from './order';
 import TerritoryModel from './territory';
@@ -77,4 +78,25 @@ export default class EmployeeModel extends Model {
 
   @BelongsTo(() => EmployeeModel)
   employee: EmployeeModel;
+
+  get toAPI(): Omit<Employee, 'reportID' | 'reportFirstName' | 'reportLastName'> {
+    return {
+      employeeID: this.employeeID,
+      lastName: this.lastName,
+      firstName: this.firstName,
+      title: this.title,
+      titleOfCourtesy: this.titleOfCourtesy,
+      birthDate: this.birthDate,
+      hireDate: this.hireDate,
+      address: this.address,
+      city: this.city,
+      region: this.region,
+      postalCode: this.postalCode,
+      country: this.country,
+      homePhone: this.homePhone,
+      extension: this.extension,
+      notes: this.notes,
+      reportsTo: this.reportsTo,
+    };
+  }
 }

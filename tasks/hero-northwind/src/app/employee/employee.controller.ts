@@ -31,26 +31,7 @@ export class EmployeeController {
         queries: logs.length,
         log: logs,
       },
-      employees: employees.data.map((employee) => {
-        return {
-          employeeID: employee.employeeID,
-          lastName: employee.lastName,
-          firstName: employee.firstName,
-          title: employee.title,
-          titleOfCourtesy: employee.titleOfCourtesy,
-          birthDate: employee.birthDate,
-          hireDate: employee.hireDate,
-          address: employee.address,
-          city: employee.city,
-          region: employee.region,
-          postalCode: employee.postalCode,
-          country: employee.country,
-          homePhone: employee.homePhone,
-          extension: employee.extension,
-          notes: employee.notes,
-          reportsTo: employee.reportsTo,
-        };
-      }),
+      employees: employees.data.map((employee) => employee.toAPI),
     };
 
     res.status(200).send(response);
@@ -75,22 +56,7 @@ export class EmployeeController {
         reportID: employeeReportsTo?.employeeID ?? null,
         reportFirstName: employeeReportsTo?.firstName ?? null,
         reportLastName: employeeReportsTo?.lastName ?? null,
-        employeeID: employee.employeeID,
-        lastName: employee.lastName,
-        firstName: employee.firstName,
-        title: employee.title,
-        titleOfCourtesy: employee.titleOfCourtesy,
-        birthDate: employee.birthDate,
-        hireDate: employee.hireDate,
-        address: employee.address,
-        city: employee.city,
-        region: employee.region,
-        postalCode: employee.postalCode,
-        country: employee.country,
-        homePhone: employee.homePhone,
-        extension: employee.extension,
-        notes: employee.notes,
-        reportsTo: employee.reportsTo,
+        ...employee.toAPI,
       },
     };
 
