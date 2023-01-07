@@ -20,12 +20,18 @@ export class ProductController {
       this.productService.getProductsCount(),
     ]);
 
+    const logs = [products.log, rows.log];
+
     const response: GetProductsResponse = {
       page,
-      pages: Math.ceil(rows / Env.PAGE_LIMIT),
+      pages: Math.ceil(rows.data / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
-      total: rows,
-      products: products.map((product) => product.toAPI),
+      total: rows.data,
+      stats: {
+        queries: logs.length,
+        log: logs,
+      },
+      products: products.data.map((product) => product.toAPI),
     };
 
     res.status(200).send(response);
@@ -34,7 +40,7 @@ export class ProductController {
   public async getProduct(req: GetProductRequest, res: FastifyReply): Promise<void> {
     const { id } = req.query;
 
-    const product = await this.productService.getProduct(id);
+    const { data: product, log } = await this.productService.getProduct(id);
 
     if (!product) {
       return res.status(404).send({ message: 'Product not found' });
@@ -43,6 +49,10 @@ export class ProductController {
     const supplier: SupplierModel = product.getDataValue('supplier');
 
     const response: GetProductResponse = {
+      stats: {
+        queries: 1,
+        log: [log],
+      },
       product: {
         ...product.toAPI,
         supplierName: supplier.companyName,
