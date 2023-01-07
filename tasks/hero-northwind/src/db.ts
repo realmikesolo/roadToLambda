@@ -21,3 +21,9 @@ export async function connectDB(): Promise<void> {
 
   console.log('Connection to DB has been established successfully.');
 }
+
+export type Log = {
+  query: string;
+  duration: string;
+  ts: string;
+};

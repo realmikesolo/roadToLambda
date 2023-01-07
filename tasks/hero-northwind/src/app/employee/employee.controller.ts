@@ -20,12 +20,18 @@ export class EmployeeController {
       this.employeeService.getEmployeesCount(),
     ]);
 
+    const logs = [employees.log, rows.log];
+
     const response: GetEmployeesResponse = {
       page,
-      pages: Math.ceil(rows / Env.PAGE_LIMIT),
+      pages: Math.ceil(rows.data / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
-      total: rows,
-      employees: employees.map((employee) => {
+      total: rows.data,
+      stats: {
+        queries: logs.length,
+        log: logs,
+      },
+      employees: employees.data.map((employee) => {
         return {
           employeeID: employee.employeeID,
           lastName: employee.lastName,
@@ -53,7 +59,7 @@ export class EmployeeController {
   public async getEmployee(req: GetEmployeeRequest, res: FastifyReply): Promise<void> {
     const { id } = req.query;
 
-    const employee = await this.employeeService.getEmployee(id);
+    const { data: employee, log } = await this.employeeService.getEmployee(id);
     if (!employee) {
       return res.status(404).send({ message: 'Employee not found' });
     }
@@ -61,6 +67,10 @@ export class EmployeeController {
     const employeeReportsTo: EmployeeModel | null = employee.getDataValue('employee');
 
     const response: GetEmployeeResponse = {
+      stats: {
+        queries: 1,
+        log: [log],
+      },
       employee: {
         reportID: employeeReportsTo?.employeeID ?? null,
         reportFirstName: employeeReportsTo?.firstName ?? null,
