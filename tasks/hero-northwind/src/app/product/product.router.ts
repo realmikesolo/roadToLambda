@@ -1,5 +1,6 @@
 import { Static, Type } from '@sinclair/typebox';
 import { FastifyInstance, FastifyRequest } from 'fastify';
+import { Log } from '../../db';
 import ProductModel from '../../models/product';
 import { ProductController } from './product.controller';
 
@@ -36,6 +37,10 @@ export type GetProductsRequest = FastifyRequest<{
 }>;
 
 export type GetProductResponse = {
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   product: Product;
 };
 
@@ -44,6 +49,10 @@ export type GetProductsResponse = {
   pages: number;
   items: number;
   total: number;
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   products: Array<Omit<Product, 'supplierName'>>;
 };
 
