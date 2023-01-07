@@ -9,6 +9,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Order } from '../app/order/order.router';
 import CustomerModel from './customer';
 import EmployeeModel from './employee';
 import OrderDetailModel from './orderDetail';
@@ -92,5 +93,28 @@ export default class OrderModel extends Model {
 
   get totalProducts(): number | undefined {
     return this.getDataValue('totalProducts');
+  }
+
+  get toAPI(): Omit<Order, 'shipViaCompanyName'> {
+    return {
+      totalProductsDiscount: this.getDataValue('totalProductsDiscount'),
+      totalProductsPrice: this.getDataValue('totalProductsPrice'),
+      totalProductsItems: this.getDataValue('totalProductsItems'),
+      totalProducts: this.getDataValue('totalProducts'),
+      orderID: this.orderID,
+      customerID: this.customerID,
+      employeeID: this.employeeID,
+      orderDate: this.orderDate,
+      requiredDate: this.requiredDate,
+      shippedDate: this.shippedDate,
+      shipVia: this.shipVia,
+      freight: this.freight,
+      shipName: this.shipName,
+      shipAddress: this.shipAddress,
+      shipCity: this.shipCity,
+      shipRegion: this.shipRegion,
+      shipPostalCode: this.shipPostalCode,
+      shipCountry: this.shipCountry,
+    };
   }
 }

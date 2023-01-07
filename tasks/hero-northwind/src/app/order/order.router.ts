@@ -2,7 +2,8 @@ import { Static, Type } from '@sinclair/typebox';
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { OrderController } from './order.controller';
 import OrderModel from '../../models/order';
-import ProductModel from '../../models/product';
+import { Product } from '../product/product.router';
+import { Log } from '../../db';
 
 const orderController = new OrderController();
 
@@ -61,8 +62,19 @@ export type GetOrdersRequest = FastifyRequest<{
 }>;
 
 export type GetOrderResponse = {
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   order: Order;
-  products: ProductModel[];
+  products: Array<
+    Omit<Product, 'supplierName'> & {
+      orderID: number;
+      quantity: number;
+      orderUnitPrice: number;
+      discount: number;
+    }
+  >;
 };
 
 export type GetOrdersResponse = {
@@ -70,5 +82,9 @@ export type GetOrdersResponse = {
   pages: number;
   items: number;
   total: number;
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   orders: Array<Omit<Order, 'shipViaCompanyName'>>;
 };
