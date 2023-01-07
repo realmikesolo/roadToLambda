@@ -1,5 +1,6 @@
 import { Static, Type } from '@sinclair/typebox';
 import { FastifyInstance, FastifyRequest } from 'fastify';
+import { Log } from '../../db';
 import CustomerModel from '../../models/customer';
 import { CustomerController } from './customer.controller';
 
@@ -36,6 +37,10 @@ export type GetCustomersResponse = {
   pages: number;
   items: number;
   total: number;
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   customers: Customer[];
 };
 
@@ -44,6 +49,10 @@ export type GetCustomerRequest = FastifyRequest<{
 }>;
 
 export type GetCustomerResponse = {
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   customer: Customer;
 };
 
