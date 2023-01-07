@@ -12,9 +12,13 @@ export class SearchController {
 
     switch (table) {
       case 'products': {
-        const products = await this.searchService.searchProducts(q);
+        const { data: products, log } = await this.searchService.searchProducts(q);
 
         response = {
+          stats: {
+            queries: 1,
+            log: [log],
+          },
           results: products.map((product) => product.toAPI),
         };
 
@@ -22,9 +26,13 @@ export class SearchController {
         break;
       }
       case 'customers': {
-        const customers = await this.searchService.searchCustomers(q);
+        const { data: customers, log } = await this.searchService.searchCustomers(q);
 
         response = {
+          stats: {
+            queries: 1,
+            log: [log],
+          },
           results: customers.map((customer) => customer.toAPI),
         };
 
