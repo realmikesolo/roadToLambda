@@ -1,14 +1,22 @@
 import OrderModel from '../../models/order';
 import ProductModel from '../../models/product';
 import ShipperModel from '../../models/shippers';
-import { db } from '../../../src/db';
+import { db, Log } from '../../../src/db';
 import { Env } from '../../env';
 
 export class OrderService {
-  public async getOrders(page: number): Promise<OrderModel[]> {
-    return OrderModel.findAll({
+  public async getOrders(page: number): Promise<{ data: OrderModel[]; log: Log }> {
+    let query!: string;
+    let duration!: number;
+
+    const data = await OrderModel.findAll({
       limit: Env.PAGE_LIMIT,
       offset: (page - 1) * Env.PAGE_LIMIT,
+      benchmark: true,
+      logging: (req: string, ms: number) => {
+        query = req;
+        duration = ms;
+      },
       attributes: {
         include: [
           [
@@ -38,14 +46,35 @@ export class OrderService {
         ],
       },
     });
+
+    return { data, log: { query, duration: `${duration}ms`, ts: new Date().toISOString() } };
   }
 
-  public async getOrdersCount(): Promise<number> {
-    return OrderModel.count();
+  public async getOrdersCount(): Promise<{ data: number; log: Log }> {
+    let query!: string;
+    let duration!: number;
+
+    const data = await OrderModel.count({
+      benchmark: true,
+      logging: (req: string, ms: number) => {
+        query = req;
+        duration = ms;
+      },
+    });
+
+    return { data, log: { query, duration: `${duration}ms`, ts: new Date().toISOString() } };
   }
 
-  public async getOrder(id: number): Promise<OrderModel | null> {
-    return OrderModel.findByPk(id, {
+  public async getOrder(id: number): Promise<{ data: OrderModel | null; log: Log }> {
+    let query!: string;
+    let duration!: number;
+
+    const data = await OrderModel.findByPk(id, {
+      benchmark: true,
+      logging: (req: string, ms: number) => {
+        query = req;
+        duration = ms;
+      },
       include: [
         { model: ShipperModel, attributes: ['companyName'] },
         {
@@ -81,5 +110,7 @@ export class OrderService {
         ],
       },
     });
+
+    return { data, log: { query, duration: `${duration}ms`, ts: new Date().toISOString() } };
   }
 }
