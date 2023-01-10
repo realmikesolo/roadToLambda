@@ -19,12 +19,18 @@ export class SupplierController {
       this.supplierService.getSuppliersCount(),
     ]);
 
+    const logs = [suppliers.log, rows.log];
+
     const response: GetSuppliersResponse = {
       page,
-      pages: Math.ceil(rows / Env.PAGE_LIMIT),
+      pages: Math.ceil(rows.data / Env.PAGE_LIMIT),
       items: Env.PAGE_LIMIT,
-      total: rows,
-      suppliers: suppliers.map((supplier) => supplier.toAPI),
+      total: rows.data,
+      stats: {
+        queries: logs.length,
+        log: logs,
+      },
+      suppliers: suppliers.data.map((supplier) => supplier.toAPI),
     };
 
     res.status(200).send(response);
@@ -33,12 +39,16 @@ export class SupplierController {
   public async getSupplier(req: GetSupplierRequest, res: FastifyReply): Promise<void> {
     const { id } = req.query;
 
-    const supplier = await this.supplierService.getSupplier(id);
+    const { data: supplier, log } = await this.supplierService.getSupplier(id);
     if (!supplier) {
       return res.status(404).send({ message: 'Supplier not found' });
     }
 
     const response: GetSupplierResponse = {
+      stats: {
+        queries: 1,
+        log: [log],
+      },
       supplier: supplier.toAPI,
     };
 

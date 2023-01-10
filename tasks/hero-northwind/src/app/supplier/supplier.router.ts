@@ -2,6 +2,7 @@ import { SupplierController } from './supplier.controller';
 import { Static, Type } from '@sinclair/typebox';
 import SupplierModel from '../../models/supplier';
 import { FastifyInstance, FastifyRequest } from 'fastify';
+import { Log } from '../../db';
 
 const supplierController = new SupplierController();
 
@@ -40,10 +41,18 @@ export type GetSuppliersResponse = {
   pages: number;
   items: number;
   total: number;
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   suppliers: Supplier[];
 };
 
 export type GetSupplierResponse = {
+  stats: {
+    queries: number;
+    log: Log[];
+  };
   supplier: Supplier;
 };
 
