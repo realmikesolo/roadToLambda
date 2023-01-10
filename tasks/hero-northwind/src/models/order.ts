@@ -79,22 +79,6 @@ export default class OrderModel extends Model {
   @BelongsTo(() => ShipperModel)
   shipper: ShipperModel;
 
-  get totalProductsDiscount(): number | undefined {
-    return this.getDataValue('totalProductsDiscount');
-  }
-
-  get totalProductsPrice(): number | undefined {
-    return this.getDataValue('totalProductsPrice');
-  }
-
-  get totalProductsItems(): number | undefined {
-    return this.getDataValue('totalProductsItems');
-  }
-
-  get totalProducts(): number | undefined {
-    return this.getDataValue('totalProducts');
-  }
-
   get toAPI(): Omit<Order, 'shipViaCompanyName'> {
     return {
       totalProductsDiscount: this.getDataValue('totalProductsDiscount'),
