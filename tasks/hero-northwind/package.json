@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.25.13",
+    "axios": "^1.2.2",
     "dotenv": "^16.0.2",
     "fastify": "^4.10.2",
     "pg": "^8.8.0",

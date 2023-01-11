@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { customerRouter } from './app/customer/customer.router';
 import { employeeRouter } from './app/employee/employee.router';
+import { locationRouter } from './app/location/location.router';
 import { orderRouter } from './app/order/order.router';
 import { productRouter } from './app/product/product.router';
 import { searchRouter } from './app/search/search.router';
@@ -16,7 +17,8 @@ export async function startServer(port = Env.SERVER_PORT): Promise<void> {
     .register(productRouter)
     .register(orderRouter)
     .register(customerRouter)
-    .register(searchRouter);
+    .register(searchRouter)
+    .register(locationRouter);
 
   await fastify.listen({ port });
 
